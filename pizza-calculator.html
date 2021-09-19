@@ -1,12 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <text font="Arial">Test</text>
-    <img src="https://cdn.pixabay.com/photo/2013/07/12/17/47/test-pattern-152459_960_720.png" alt="Text" width="300" style="top:100px">
+    <title>Testing</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="pizza-calculator.css">
 </head>
+<script type="text/javascript" src="pizzas.js"></script>
+<script>
+    function test(){
+        pizzas.forEach(pizza => {
+            const dv = document.createElement("tr");
+            dv.className = "w3-card w3-hover-blue-gray"
+            dv.style.cursor = "pointer"
+            dv.onclick = function(){alert(pizza.name)}
+            const text1 = document.createElement("td");
+            text1.innerText = pizza.name
+            const text2 = document.createElement("td");
+            text2.innerText = pizza.description
+            const text3 = document.createElement("td");
+            text3.innerText = (parseFloat(pizza.price)/100).toString()
+            //text1.className = "w3-blue"
+            dv.appendChild(text1)
+            dv.appendChild(text2)
+            dv.appendChild(text3)
+            const currentDiv = document.getElementById("table");
+            currentDiv.appendChild(dv)
+        })
+    }
+</script>
 <body>
+
+<div class="w3-left-align">
+    <table class="w3-table" id="table">
+        <tr>
+            <th>Pizza</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        <tr class="w3-hover-blue-gray" onclick="alert('test')" style="cursor: pointer">
+            <td>Pizza</td>
+            <td>Description</td>
+            <td>Price</td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="w3-panel w3-show-inline-block w3-display-middle">
+    <div class="w3-button w3-blue" onclick="test()">Pizza lijst</div>
+    <div class="w3-button">Calculatie</div>
+</div>
 
 </body>
 </html>
