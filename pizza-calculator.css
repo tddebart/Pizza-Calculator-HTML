@@ -1,6 +1,38 @@
-img {
-    top:150px;
-}
 text {
     font-family: "Helvetica", serif;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+}
+.grid-item {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
+
+#container {
+    min-height: 100vh;
+    display: flex;
+}
+.left{
+    width: 50%;
+    background-color: gray;
+    left: 0;
+}
+.right{
+    width: 50%;
+    background-color: darkgray;
+    right: 0;
+}
+.centered{
+    position: absolute;
+    left: 75%;
+    top: 50%;
+    /*transform: translate(-50%, -50%);*/
+    text-align: center;
 }
