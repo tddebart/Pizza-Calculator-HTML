@@ -2,103 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Testing</title>
+    <title>Pizza calculator</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="pizza-calculator.css">
 </head>
-<script type="text/javascript" src="pizzas.js"></script>
-<script>
-    window.onload = createPizzaList
-    function createPizzaList(){
-        pizzas.forEach(pizza => {
-            // Create list item
-            const dv = document.createElement("tr");
-            dv.className = "w3-card w3-hover-blue-gray"
-            dv.style.cursor = "pointer"
-            dv.onclick = function(){openPopup(pizza.name+"pop")}
-
-            // Create item1
-            const text1 = document.createElement("td");
-            text1.innerText = pizza.name
-
-            // Create item2
-            const text2 = document.createElement("td");
-            text2.innerText = (parseFloat(pizza.price)/100).toString()
-
-            // Add items to parent
-            dv.appendChild(text1)
-            dv.appendChild(text2)
-
-            // Add list item to main list
-            const currentDiv = document.getElementById("table");
-            currentDiv.appendChild(dv)
-
-            // Create popout text
-            const pop = document.createElement("div");
-            pop.id = pizza.name+"pop"
-            pop.className = "w3-container w3-hide"
-
-            // Create item1
-            const poptext1 = document.createElement("p");
-            poptext1.innerText = pizza.description
-            poptext1.style.maxWidth = "500px"
-
-            // Add items to popout
-            pop.appendChild(poptext1)
-
-            // Add popout to list
-            currentDiv.appendChild(pop)
-        })
-    }
-
-    function openPopup(id) {
-        const x = document.getElementById(id);
-        if (x.className.includes("w3-show")) {
-            x.className = x.className.replace(" w3-show", "");
-        } else {
-            x.className += " w3-show";
-        }
-    }
-</script>
 <body>
-
-<!--<div class="w3-bar w3-black w3-rest">-->
-<!--    <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>-->
-<!--    <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Paris</button>-->
-<!--    <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Tokyo</button>-->
-<!--</div>-->
 
 <div id="container">
 
     <div class="left">
-        <table class="w3-table" id="table">
-            <tr>
-                <th>Pizza</th>
-                <th>Price</th>
-            </tr>
-        </table>
+        <p style="font-size:25px">Kies een pizza</p>
+        <div class="grid-container" id="grid1">
 
-        <button onclick="openPopup('testi')" class="w3-button w3-block w3-left-align">Click me</button>
+        </div>
 
-        <div id="testi" class="w3-container w3-hide">
-            <p>Some text..</p>
+        <div style="height:50px"></div>
+
+        <p style="font-size:25px">Kies een topping</p>
+        <div class="grid-container" id="grid2">
+
         </div>
-        <div class="grid-container">
-            <div class="grid-item">
-                <p class="w3-show-inline-block">Pizza name</p>
-                <img class="w3-image" style="max-width: 15ch" src="https://www.protislank.nl/slank/wp-content/uploads/2020/09/Proteinerijke-pizza-margarita.png" alt="pizza">
-            </div>
-        </div>
+
     </div>
 
     <div class="right">
+        <div class="totaal">
+            <p style="font-size:20px; text-align:center">Totaal</p>
+        </div>
 
+        <p style="font-size:25px">Uw order</p>
+
+        <div id="info1">
+
+        </div>
+
+        <div id="info2">
+
+        </div>
+
+        <div style="height:100px"></div>
     </div>
 </div>
 
-
-
-
-
 </body>
+
+<script type="text/javascript" src="pizzas.js"></script>
+<script type="text/javascript" src="pizza-calculator.js"></script>
+
 </html>

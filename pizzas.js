@@ -5,3 +5,10 @@ pizzas = [
 	{name: 'Vegetariana', price:1140, img: 'vegetariana.png', description: 'tomaat, mozzarella, paprika en (gegrilde) courgette en aubergine. Soms ook broccoli of spinazie'},
 	{name: 'Quattro Stagioni', price:1100, img: 'quattro-stagioni.png', description: 'tomaat, mozzarella, ham, champignons, olijven, artisjokken (soms doperwten in plaats van artisjok)'}
 ]
+toppings = [
+	{name: 'Pepperoni', price:65},
+	{name: 'Paddenstoelen', price:85},
+	{name: 'Uitjes', price:80},
+	{name: 'Extra kaas', price:110},
+	{name: 'Ananas', price:75},
+]

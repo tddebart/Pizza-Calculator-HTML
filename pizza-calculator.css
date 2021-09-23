@@ -10,8 +10,8 @@ text {
 .grid-item {
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
+    padding: 5px;
+    font-size: 20px;
     text-align: center;
 }
 
@@ -28,6 +28,7 @@ text {
     width: 50%;
     background-color: darkgray;
     right: 0;
+    padding-left: 20px;
 }
 .centered{
     position: absolute;
@@ -35,4 +36,11 @@ text {
     top: 50%;
     /*transform: translate(-50%, -50%);*/
     text-align: center;
+}
+.totaal{
+    position: absolute;
+    right: 15px;
+    top:15px;
+    min-width: 300px;
+    border: 1px solid;
 }
