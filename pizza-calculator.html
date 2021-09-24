@@ -18,16 +18,36 @@
 
         <div style="height:50px"></div>
 
-        <p style="font-size:25px">Kies een topping</p>
-        <div class="grid-container" id="grid2">
+        <div class="w3-hide" id="show-later">
+            <p style="font-size:25px">Kies een topping</p>
+            <div class="grid-container" id="grid2">
 
+            </div>
         </div>
 
     </div>
 
     <div class="right">
-        <div class="totaal">
-            <p style="font-size:20px; text-align:center">Totaal</p>
+
+        <div class="totaal" id="totaal" style="padding:5px">
+            <div style="font-size:20px; text-align:center">Totaal</div>
+            <div id="total-container" style="overflow:auto; padding-bottom: 10px">
+
+            </div>
+
+            <div style="border: 1px solid; height: 1px; margin:-5px"></div>
+            <div style="height: 15px"></div>
+
+            <input type="checkbox" id="pin"  autocomplete="off" onchange="pinChanged()">
+            <label for="pin">Met pin betalen?</label>
+
+            <div id="kortingen" style="padding-top: 7px">
+
+            </div>
+
+            <div style="padding-bottom: 5px; padding-top: 5px">Totale prijs
+            <span id="total-price" style="float: right">€0,00</span></div>
+
         </div>
 
         <p style="font-size:25px">Uw order</p>
@@ -36,11 +56,10 @@
 
         </div>
 
-        <div id="info2">
+        <div id="toppings">
 
         </div>
 
-        <div style="height:100px"></div>
     </div>
 </div>
 
