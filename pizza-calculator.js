@@ -3,10 +3,8 @@ let totalCreated = false;
 let currentPizza;
 let prevPizza;
 let currentToppings = [];
-let currentPizzaSize = 1;
 let pinDiscount = false;
 
-const pizzaSizePrices = [0.75, 1, 1.2, 1.4, 2]
 
 pizzas.forEach(pizza => {
     const pizzaPrice = "€" + (parseFloat(pizza.price) / 100).toFixed(2).toString()
@@ -49,6 +47,8 @@ pizzas.forEach(pizza => {
         price.innerText = pizzaPrice
         price.style.fontSize = "17px"
 
+        //#region size dropdown
+        
         // Create size holder
         const sizeHolder = document.createElement("div");
 
@@ -63,39 +63,61 @@ pizzas.forEach(pizza => {
         const sizeSelector = document.createElement("select");
         sizeSelector.style.padding = "3px"
         sizeSelector.className = "w3-show-inline-block"
-        sizeSelector.onchange = updatePriceTotal
+        sizeSelector.addEventListener("change", updatePriceTotal)
         sizeSelector.id = "sizeSelector"
 
-        const small = document.createElement("option");
-        small.innerText = "small"
-        small.onclick = () => currentPizzaSize = 0
-        const normal = document.createElement("option");
-        normal.innerText = "normal"
-        normal.selected = true
-        normal.onclick = () => currentPizzaSize = 1
-        const medium = document.createElement("option");
-        medium.innerText = "medium"
-        medium.onclick = () => currentPizzaSize = 2
-        const large = document.createElement("option");
-        large.innerText = "large"
-        large.onclick = () => currentPizzaSize = 3
-        const kingSize = document.createElement("option");
-        kingSize.innerText = "kingsize"
-        kingSize.onclick = () => currentPizzaSize = 4
+        sizes.forEach(size => {
+            const sizeItem = document.createElement("option");
+            sizeItem.innerText = size.name
+            sizeItem.selected = size.selected
+            sizeSelector.appendChild(sizeItem)
+        })
 
-        sizeSelector.appendChild(small)
-        sizeSelector.appendChild(normal)
-        sizeSelector.appendChild(medium)
-        sizeSelector.appendChild(large)
-        sizeSelector.appendChild(kingSize)
-
-        // Apply children
         sizeHolder.appendChild(size)
         sizeHolder.appendChild(sizeSelector)
+
+        //#endregion
+
+        //#region slice dropdown
+
+
+        // Create slice holder
+        const sliceHolder = document.createElement("div");
+
+        // Create slicing
+        const slicing = document.createElement("div");
+        slicing.innerText = "Pizza deling:"
+        slicing.style.fontSize = "17px"
+        slicing.className = "w3-show-inline-block"
+        slicing.style.paddingRight = "7px"
+
+        // Create slicing selector
+        const sliceSelector = document.createElement("select");
+        sliceSelector.style.padding = "3px"
+        sliceSelector.className = "w3-show-inline-block"
+        sliceSelector.addEventListener("change", updatePriceTotal)
+
+        sliceSelector.id = "sliceSelector"
+
+        slices.forEach(slice => {
+            const sliceItem = document.createElement("option");
+            sliceItem.innerText = slice.name
+            sliceItem.selected = size.selected
+            sliceSelector.appendChild(sliceItem)
+        })
+
+        sliceHolder.appendChild(slicing)
+        sliceHolder.appendChild(sliceSelector)
+
+
+        //#endregion
+
+        // Apply children
 
         hold.appendChild(desc)
         hold.appendChild(price)
         hold.appendChild(sizeHolder)
+        hold.appendChild(sliceHolder)
 
         info.appendChild(name)
         info.appendChild(image)
@@ -239,7 +261,9 @@ function updatePriceTotal() {
         price += topping.price
     })
 
-    price *= pizzaSizePrices[document.getElementById("sizeSelector").selectedIndex]
+    price *= sizes[document.getElementById("sizeSelector").selectedIndex].keer
+
+    price += slices[document.getElementById("sliceSelector").selectedIndex].price
 
     if(price > 50 && pinDiscount) {
         price -= 50

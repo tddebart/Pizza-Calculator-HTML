@@ -12,3 +12,17 @@ toppings = [
 	{name: 'Extra kaas', price:110},
 	{name: 'Ananas', price:75},
 ]
+sizes = [
+	{name: 'Small', keer:0.75},
+	{name: 'Normal', keer:1, selected:true},
+	{name: 'Medium', keer:1.2},
+	{name: 'Large', keer:1.4},
+	{name: 'Kingsize', keer:2},
+]
+slices = [
+	{name: 'Ongedeeld', price:0, selected:true},
+	{name: 'Tweeën', price:10},
+	{name: 'Vieren', price:15},
+	{name: 'Zessen', price:20},
+	{name: 'Achten', price:25},
+]
