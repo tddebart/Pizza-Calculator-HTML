@@ -4,7 +4,7 @@ let currentPizza;
 let prevPizza;
 let currentToppings = [];
 let pinDiscount = false;
-let bezorgd = false;
+let delivered = false;
 let prevSize
 let prevSlice
 
@@ -14,9 +14,10 @@ pizzas.forEach(pizza => {
 
     // Create grid item
     const div = document.createElement("div")
-    div.className = "grid-item w3-hover-gray w3-button"
+    div.className = "grid-item w3-hover-gray w3-button w3-round"
     div.id = pizza.name+"grid"
     div.style.cursor = "pointer"
+    div.style.margin = '3px'
     div.onclick = function () {
         // Get info and reset it
         const info = document.getElementById("info1")
@@ -199,8 +200,9 @@ toppings.forEach(topping => {
 
     // Create grid item
     const div = document.createElement("div")
-    div.className = "grid-item w3-hover-gray w3-button"
+    div.className = "grid-item w3-hover-gray w3-button w3-round"
     div.style.cursor = "pointer"
+    div.style.margin = '3px'
     div.onclick = function(){
         // Get toppings div and total container
         const info = document.getElementById("toppings")
@@ -318,7 +320,7 @@ function kortingChanged(kortingName, kortingPrice, checkId) {
         if(checkId.includes('pin')) {
             pinDiscount = true;
         } else if (checkId.includes('bezorgd')) {
-            bezorgd = true
+            delivered = true
         }
     } else {
         const discountDiv = document.getElementById("kortingen")
@@ -326,7 +328,7 @@ function kortingChanged(kortingName, kortingPrice, checkId) {
         if(checkId.includes('pin')) {
             pinDiscount = false;
         } else if (checkId.includes('bezorgd')) {
-            bezorgd = false
+            delivered = false
         }
     }
     updatePriceTotal()
@@ -336,19 +338,23 @@ function updatePriceTotal() {
     if(currentPizza == null) return;
     const priceText = document.getElementById("total-price")
 
+    // pizza
     let price = currentPizza.price;
+    // toppings
     currentToppings.forEach(topping => {
         price += topping.price
     })
 
+    // size
     price *= sizes[document.getElementById("sizeSelector").selectedIndex].keer
 
+    // slice
     price += slices[document.getElementById("sliceSelector").selectedIndex].price
 
     if(pinDiscount) {
         price -= 50
     }
-    if(bezorgd) {
+    if(delivered) {
         price += 250
     }
 
@@ -421,9 +427,4 @@ function openAccordion(id) {
     } else {
         x.className = x.className.replace(" w3-show", "");
     }
-}
-
-// From the internet
-function insertAfter(newNode, existingNode) {
-    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
