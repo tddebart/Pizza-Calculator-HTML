@@ -5,6 +5,8 @@ let prevPizza;
 let currentToppings = [];
 let pinDiscount = false;
 let bezorgd = false;
+let prevSize
+let prevSlice
 
 
 pizzas.forEach(pizza => {
@@ -31,7 +33,7 @@ pizzas.forEach(pizza => {
         image.style.maxHeight = "18ch"
         image.style.paddingRight = "10px"
         image.className = "w3-show-inline-block"
-        image.style.alignSelf = "top"
+        image.style.verticalAlign = 'top'
 
         // Create holder
         const hold = document.createElement("div")
@@ -61,11 +63,30 @@ pizzas.forEach(pizza => {
         size.className = "w3-show-inline-block"
         size.style.paddingRight = "7px"
 
+        const discountDiv = document.getElementById("kortingen")
+
         // Create size selector
         const sizeSelector = document.createElement("select");
         sizeSelector.style.padding = "3px"
         sizeSelector.className = "w3-show-inline-block"
         sizeSelector.addEventListener("change", updatePriceTotal)
+        sizeSelector.addEventListener("change", function() {
+            if (prevSize != null) {
+                discountDiv.children[0].removeChild(document.getElementById(prevSize.name))
+            }
+            let currentSize = null
+            sizes.forEach(size => {
+                if(size.name.toLowerCase().toString() === sizeSelector.options[sizeSelector.selectedIndex].textContent.toLowerCase().toString()) {
+                    currentSize = size
+                }
+            })
+            if(currentSize.name !== 'Normal') {
+                discountDiv.children[0].appendChild(createItem(sizeSelector.options[sizeSelector.selectedIndex].textContent, 'x'+currentSize.keer))
+                prevSize = currentSize
+            } else {
+                prevSize = null
+            }
+        })
         sizeSelector.id = "sizeSelector"
 
         sizes.forEach(size => {
@@ -98,13 +119,45 @@ pizzas.forEach(pizza => {
         sliceSelector.style.padding = "3px"
         sliceSelector.className = "w3-show-inline-block"
         sliceSelector.addEventListener("change", updatePriceTotal)
+        sliceSelector.addEventListener("change", function() {
+            if (prevSlice != null) {
+                discountDiv.removeChild(document.getElementById(prevSlice.name))
+            }
+            let currentSlice = null
+            slices.forEach(slice => {
+                if(slice.name.toLowerCase().toString() === sliceSelector.options[sliceSelector.selectedIndex].textContent.toLowerCase().toString()) {
+                    currentSlice = slice
+                }
+            })
+            if (currentSlice.name !== 'Ongedeeld') {
+                let slicePrice = "€" + (parseFloat(currentSlice.price) / 100).toFixed(2).toString()
+                const item = createItem(sliceSelector.options[sliceSelector.selectedIndex].textContent, slicePrice)
+                let any = null
+                for (const size1 of sizes) {
+                    for (const child of discountDiv.children) {
+                        if(child.id.toLowerCase().includes(size1.name)) {
+                            any = child
+                        }
+                    }
+                }
+                if (any != null) {
+                    discountDiv.insertBefore(item, any)
+                } else {
+                    discountDiv.appendChild(item)
+                }
+
+                prevSlice = currentSlice
+            } else {
+                prevSlice = null
+            }
+        })
 
         sliceSelector.id = "sliceSelector"
 
         slices.forEach(slice => {
             const sliceItem = document.createElement("option");
             sliceItem.innerText = slice.name
-            sliceItem.selected = size.selected
+            sliceItem.selected = slice.selected
             sliceSelector.appendChild(sliceItem)
         })
 
@@ -386,4 +439,9 @@ function openAccordion(id) {
     } else {
         x.className = x.className.replace(" w3-show", "");
     }
+}
+
+// From the internet
+function insertAfter(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
