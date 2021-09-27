@@ -26,3 +26,20 @@ slices = [
 	{name: 'Zessen', price:20},
 	{name: 'Achten', price:25},
 ]
+ingredienten = [
+	'tomaat',
+	'mozzarella',
+	'basilicum',
+	'knoflook',
+	'oregano',
+	'pecorino',
+	'taleggio',
+	'gorgonzola',
+	'paprika',
+	'courgette',
+	'ham',
+	'champignons',
+	'olijven',
+	'artisjokken'
+
+]

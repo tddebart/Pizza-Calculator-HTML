@@ -4,6 +4,7 @@ let currentPizza;
 let prevPizza;
 let currentToppings = [];
 let pinDiscount = false;
+let bezorgd = false;
 
 
 pizzas.forEach(pizza => {
@@ -12,6 +13,7 @@ pizzas.forEach(pizza => {
     // Create grid item
     const div = document.createElement("div")
     div.className = "grid-item w3-hover-gray w3-button"
+    div.id = pizza.name+"grid"
     div.style.cursor = "pointer"
     div.onclick = function () {
         // Get info and reset it
@@ -34,7 +36,7 @@ pizzas.forEach(pizza => {
         // Create holder
         const hold = document.createElement("div")
         hold.className = "w3-show-inline-block"
-        hold.style.transform = "translateY(30%)"
+        //hold.style.transform = "translateY(30%)"
 
         // Create description
         const desc = document.createElement("div");
@@ -215,6 +217,34 @@ toppings.forEach(topping => {
     grid.appendChild(div)
 })
 
+ingredienten.forEach(ing => {
+    for (let i = 0; i < 2; i++) {
+        const input = document.createElement("input")
+        input.type = "checkbox"
+        input.autocomplete = "off"
+        input.onchange = i===1 ? function () {filterChangedExclusive(ing)} : function () {filterChanged(ing)}
+        input.id = ing+i.toString()
+        input.style.marginLeft = '6px'
+        input.style.marginRight = '5px'
+
+        const label = document.createElement("label")
+        label.textContent = ing.charAt(0).toUpperCase() + ing.slice(1)
+        label.htmlFor = ing+i.toString()
+
+        if(i===1) {
+            const exclusive = document.getElementById('exclusief')
+            exclusive.appendChild(input)
+            exclusive.appendChild(label)
+        } else{
+            const inclusief = document.getElementById('inclusief')
+            inclusief.appendChild(input)
+            inclusief.appendChild(label)
+        }
+
+    }
+
+})
+
 function updateTotalItems() {
     if(!totalCreated) {
         // Create container for items
@@ -253,7 +283,22 @@ function pinChanged() {
     updatePriceTotal()
 }
 
+function bezorgdChanged() {
+    const check = document.getElementById("bezorgd")
+    if(check.checked) {
+        const discountDiv = document.getElementById("kortingen")
+        discountDiv.appendChild(createItem("Thuisbezorgd", "€2,50"))
+        bezorgd = true;
+    } else {
+        const discountDiv = document.getElementById("kortingen")
+        discountDiv.removeChild(document.getElementById("Thuisbezorgd"))
+        bezorgd = false;
+    }
+    updatePriceTotal()
+}
+
 function updatePriceTotal() {
+    if(currentPizza == null) return;
     const priceText = document.getElementById("total-price")
 
     let price = currentPizza.price;
@@ -265,8 +310,11 @@ function updatePriceTotal() {
 
     price += slices[document.getElementById("sliceSelector").selectedIndex].price
 
-    if(price > 50 && pinDiscount) {
+    if(pinDiscount) {
         price -= 50
+    }
+    if(bezorgd) {
+        price += 250
     }
 
     priceText.textContent = "€" + (parseFloat(price) / 100).toFixed(2).toString()
@@ -293,4 +341,49 @@ function createItem(itemName, itemPrice) {
     item.appendChild(name)
 
     return item
+}
+
+function filterChanged(filter) {
+    if(document.getElementById(filter+'0').checked) {
+        pizzas.forEach(pizza => {
+            const pizDiv = document.getElementById(pizza.name+"grid")
+            if(!pizza.description.toLowerCase().includes(filter.toLowerCase())) {
+                pizDiv.className += " w3-hide"
+            }
+        })
+    } else {
+        pizzas.forEach(pizza => {
+            const pizDiv = document.getElementById(pizza.name+"grid")
+            if(!pizza.description.toLowerCase().includes(filter.toLowerCase())) {
+                pizDiv.className = pizDiv.className.replace('w3-hide', '')
+            }
+        })
+    }
+}
+
+function filterChangedExclusive(filter) {
+    if(document.getElementById(filter+'1').checked) {
+        pizzas.forEach(pizza => {
+            const pizDiv = document.getElementById(pizza.name+"grid")
+            if(pizza.description.toLowerCase().includes(filter.toLowerCase())) {
+                pizDiv.className += " w3-hide"
+            }
+        })
+    } else {
+        pizzas.forEach(pizza => {
+            const pizDiv = document.getElementById(pizza.name+"grid")
+            if(pizza.description.toLowerCase().includes(filter.toLowerCase())) {
+                pizDiv.className = pizDiv.className.replace('w3-hide', '')
+            }
+        })
+    }
+}
+
+function openAccordion(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") === -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
 }

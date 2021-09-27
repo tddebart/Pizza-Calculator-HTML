@@ -28,7 +28,7 @@
     padding-left: 20px;
 }
 .totaal{
-    position: absolute;
+    float: right;
     right: 15px;
     top:15px;
     min-width: 300px;

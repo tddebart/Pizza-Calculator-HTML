@@ -11,12 +11,23 @@
 <div id="container">
 
     <div class="left">
-        <p style="font-size:25px">Kies een pizza</p>
+        <div class="w3-show-inline-block" style="width: 100%;">
+            <p style="font-size:25px">Kies een pizza</p>
+            <button onclick="openAccordion('filters')" style="margin-left:5px" class="w3-button w3-right-align w3-round">Filters</button>
+            <div id="filters" class="w3-hide" style="margin-top: 10px">
+                <div id="inclusief" style="margin-left: 5px;">
+                    <p>Inclusief</p>
+                </div>
+                <div id="exclusief" style="margin-left: 5px;">
+                    <p>Exclusief</p>
+                </div>
+
+            </div>
+        </div>
+
         <div class="grid-container" id="grid1">
 
         </div>
-
-        <div style="height:50px"></div>
 
         <div class="w3-hide" id="show-later">
             <p style="font-size:25px">Kies een topping</p>
@@ -38,8 +49,15 @@
             <div style="border: 1px solid; height: 1px; margin:-5px"></div>
             <div style="height: 15px"></div>
 
-            <input type="checkbox" id="pin"  autocomplete="off" onchange="pinChanged()">
-            <label for="pin">Met pin betalen?</label>
+            <div>
+                <input type="checkbox" id="bezorgd" autocomplete="off" onchange="bezorgdChanged()">
+                <label for="bezorgd">Thuis bezorgd?</label>
+            </div>
+
+            <div>
+                <input type="checkbox" id="pin"  autocomplete="off" onchange="pinChanged()">
+                <label for="pin">Met pin betalen?</label>
+            </div>
 
             <div id="kortingen" style="padding-top: 7px">
 
@@ -55,6 +73,8 @@
         <div id="info1">
 
         </div>
+
+        <div style="height: 50px"></div>
 
         <div id="toppings">
 
