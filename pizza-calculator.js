@@ -70,6 +70,7 @@ pizzas.forEach(pizza => {
         sizeSelector.style.padding = "3px"
         sizeSelector.className = "w3-show-inline-block"
         sizeSelector.addEventListener("change", updatePriceTotal)
+        // Create size item in total
         sizeSelector.addEventListener("change", function() {
             if (prevSize != null) {
                 discountDiv.children[0].removeChild(document.getElementById(prevSize.name))
@@ -119,6 +120,7 @@ pizzas.forEach(pizza => {
         sliceSelector.style.padding = "3px"
         sliceSelector.className = "w3-show-inline-block"
         sliceSelector.addEventListener("change", updatePriceTotal)
+        // Create slie item in total
         sliceSelector.addEventListener("change", function() {
             if (prevSlice != null) {
                 discountDiv.removeChild(document.getElementById(prevSlice.name))
@@ -131,21 +133,7 @@ pizzas.forEach(pizza => {
             })
             if (currentSlice.name !== 'Ongedeeld') {
                 let slicePrice = "€" + (parseFloat(currentSlice.price) / 100).toFixed(2).toString()
-                const item = createItem(sliceSelector.options[sliceSelector.selectedIndex].textContent, slicePrice)
-                let any = null
-                for (const size1 of sizes) {
-                    for (const child of discountDiv.children) {
-                        if(child.id.toLowerCase().includes(size1.name)) {
-                            any = child
-                        }
-                    }
-                }
-                if (any != null) {
-                    discountDiv.insertBefore(item, any)
-                } else {
-                    discountDiv.appendChild(item)
-                }
-
+                discountDiv.appendChild(createItem(sliceSelector.options[sliceSelector.selectedIndex].textContent, slicePrice))
                 prevSlice = currentSlice
             } else {
                 prevSlice = null
@@ -277,8 +265,8 @@ ingredienten.forEach(ing => {
         input.autocomplete = "off"
         input.onchange = i===1 ? function () {filterChangedExclusive(ing)} : function () {filterChanged(ing)}
         input.id = ing+i.toString()
-        input.style.marginLeft = '6px'
-        input.style.marginRight = '5px'
+        input.style.marginLeft = '7px'
+        input.style.marginRight = '6px'
 
         const label = document.createElement("label")
         label.textContent = ing.charAt(0).toUpperCase() + ing.slice(1)
@@ -322,30 +310,24 @@ function updateTotalItems() {
     updatePriceTotal()
 }
 
-function pinChanged() {
-    const pin = document.getElementById("pin")
-    if(pin.checked) {
-        const discountDiv = document.getElementById("kortingen")
-        discountDiv.appendChild(createItem("Pin korting", "€-0,50"))
-        pinDiscount = true;
-    } else {
-        const discountDiv = document.getElementById("kortingen")
-        discountDiv.removeChild(document.getElementById("Pin korting"))
-        pinDiscount = false;
-    }
-    updatePriceTotal()
-}
-
-function bezorgdChanged() {
-    const check = document.getElementById("bezorgd")
+function kortingChanged(kortingName, kortingPrice, checkId) {
+    const check = document.getElementById(checkId)
     if(check.checked) {
         const discountDiv = document.getElementById("kortingen")
-        discountDiv.appendChild(createItem("Thuisbezorgd", "€2,50"))
-        bezorgd = true;
+        discountDiv.appendChild(createItem(kortingName, kortingPrice))
+        if(checkId.includes('pin')) {
+            pinDiscount = true;
+        } else if (checkId.includes('bezorgd')) {
+            bezorgd = true
+        }
     } else {
         const discountDiv = document.getElementById("kortingen")
-        discountDiv.removeChild(document.getElementById("Thuisbezorgd"))
-        bezorgd = false;
+        discountDiv.removeChild(document.getElementById(kortingName))
+        if(checkId.includes('pin')) {
+            pinDiscount = false;
+        } else if (checkId.includes('bezorgd')) {
+            bezorgd = false
+        }
     }
     updatePriceTotal()
 }

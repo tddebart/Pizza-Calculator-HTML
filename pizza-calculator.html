@@ -50,12 +50,12 @@
             <div style="height: 15px"></div>
 
             <div>
-                <input type="checkbox" id="bezorgd" autocomplete="off" onchange="bezorgdChanged()">
+                <input type="checkbox" id="bezorgd" autocomplete="off" onchange="kortingChanged('Thuisbezorgd' , '€2,50', 'bezorgd')">
                 <label for="bezorgd">Thuis bezorgd?</label>
             </div>
 
             <div>
-                <input type="checkbox" id="pin"  autocomplete="off" onchange="pinChanged()">
+                <input type="checkbox" id="pin"  autocomplete="off" onchange="kortingChanged('Pin korting', '€-0,50', 'pin')">
                 <label for="pin">Met pin betalen?</label>
             </div>
 
